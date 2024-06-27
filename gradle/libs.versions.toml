@@ -1,0 +1,123 @@
+[versions]
+agp = "8.3.2"
+kotlin = "1.9.0"
+coreKtx = "1.13.1"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+lifecycleRuntimeKtx = "2.8.2"
+activityCompose = "1.9.0"
+composeBom = "2024.06.00"
+# --> Androidx <-- #
+androidx-activity-compose = "1.4.0"
+androidx-activity-ktx = "1.4.0"
+androidx-annotation = "1.3.0"
+androidx-appcompat = "1.4.0"
+androidx-cardview = "1.0.0"
+androidx-compose = "1.1.1"
+androidx-constraintlayout = "2.1.3"
+androidx-core-ktx = "1.7.0"
+androidx-core-testing = "2.1.0"
+androidx-datastore-preferences = "1.0.0"
+androidx-fragment-ktx = "1.4.0"
+androidx-lifecycle = "2.4.0"
+androidx-lifecycle-viewmodel-compose = "2.4.1"
+androidx-livedata-ktx = "2.4.0"
+androidx-navigation-fragment-ktx = "2.4.1"
+androidx-navigation-ui-ktx = "2.4.1"
+androidx-paging-runtime = "2.1.2"
+androidx-preference = "1.1.1"
+androidx-recyclerview = "1.2.1"
+androidx-recyclerview-selection = "1.1.0"
+androidx-room = "2.4.2"
+# --> Networking <-- #
+retrofit2 = "2.9.0"
+okhttp3 = "4.10.0"
+converter-gson = "2.9.0"
+logging-interceptor = "4.10.0"
+# --> UI <-- #
+flowLayoutVersion = "1.3.3"
+# --> HILT <-- #
+hilt = "2.42"
+compose-hilt-navigation-version = "1.2.0"
+
+# --> coroutines <-- #
+coroutines = "1.6.4"
+
+# --> Utils <-- #
+gson = "2.10.1"
+glide = "4.12.0"
+glide-compiler = "4.13.2"
+
+leakcanary-android = "2.8.1"
+
+androidGradlePlugin = "8.1.0"
+
+androidx-test-core = "1.4.0"
+androidx-test-espresso = "3.4.0"
+androidx-test-ext-junit = "1.1.3"
+androidx-test-orchestrator = "1.2.0"
+androidx-test-rules = "1.4.0"
+androidx-test-runner = "1.4.0"
+
+
+
+google-autoService = "1.0-rc4"
+google-gson = "2.8.5"
+google-material = "1.4.0"
+google-material-compose-theme-adapter = "1.1.6"
+
+kotlinx-coroutines = "1.5.2"
+
+
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+
+
+
+# --> Networking <-- #
+retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit2" }
+okhttp3 = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp3" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converter-gson" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "logging-interceptor" }
+
+# --> HILT <-- #
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "compose-hilt-navigation-version" }
+
+# --> Coroutines <-- #
+kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+
+# --> Utils <-- #
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-compiler = { module = "com.github.bumptech.glide:glide", version.ref = "glide-compiler" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+
+
+
+[bundles]
+hilt = ["hilt-android", "hilt-android-compiler", "hilt-android-testing", "hilt-navigation-compose"]
+networking = ["retrofit2", "okhttp3", "converter-gson", "logging-interceptor"]
+glide = ["glide", "glide-compiler"]
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+#kotlinKapt = { id = "kotlin-kapt" }
+
