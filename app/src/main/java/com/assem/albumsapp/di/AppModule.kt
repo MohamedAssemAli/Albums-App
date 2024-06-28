@@ -1,9 +1,11 @@
 package com.assem.albumsapp.di
 
-import com.assem.albumsapp.data.repository.AlbumsRepository
 import com.assem.albumsapp.data.repository.AlbumsRepositoryImpl
+import com.assem.albumsapp.data.source.local.AlbumsLocalSource
+import com.assem.albumsapp.data.source.local.AlbumsLocalSourceImpl
 import com.assem.albumsapp.data.source.remote.AlbumsRemoteSource
 import com.assem.albumsapp.data.source.remote.AlbumsRemoteSourceImpl
+import com.assem.albumsapp.domain.repository.AlbumsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -24,4 +26,9 @@ abstract class AppModule {
     abstract fun bindAlbumsListingRemoteSource(
         albumsListingRemoteSourceImpl: AlbumsRemoteSourceImpl
     ): AlbumsRemoteSource
+
+    @Binds
+    abstract fun bindAlbumsListingLocalSource(
+        albumsListingLocalSourceImpl: AlbumsLocalSourceImpl
+    ): AlbumsLocalSource
 }
