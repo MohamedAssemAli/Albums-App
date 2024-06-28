@@ -3,7 +3,7 @@ package com.assem.albumsapp.di
 import android.content.Context
 import androidx.multidex.BuildConfig
 import com.assem.albumsapp.data.api.AlbumsApi
-import com.assem.albumsapp.data.utils.Config
+import com.assem.albumsapp.data.source.remote.RemoteConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -28,38 +28,19 @@ class NetworkModule {
     fun providesRetrofit(
         gsonConverterFactory: GsonConverterFactory, okHttpClient: OkHttpClient
     ): Retrofit {
-        return Retrofit.Builder().baseUrl(Config.BASE_URL).addConverterFactory(gsonConverterFactory)
-            .client(okHttpClient).build()
+        return Retrofit.Builder()
+            .baseUrl(RemoteConfig.BASE_URL)
+            .addConverterFactory(gsonConverterFactory)
+            .client(okHttpClient)
+            .build()
 
-    }
-
-    @Provides
-    @Singleton
-    fun apiKeyInterceptor(): Interceptor {
-        return Interceptor { chain ->
-            val original = chain.request()
-            val originalHttpUrl = original.url
-
-            val url = originalHttpUrl.newBuilder()
-//                .addQueryParameter("api_key", BuildConfig.API_KEY)
-                .build()
-
-            val requestBuilder = original.newBuilder().url(url)
-            val request = requestBuilder.build()
-
-            chain.proceed(request)
-        }
     }
 
     @Provides
     @Singleton
     fun loggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = if (BuildConfig.BUILD_TYPE == "release") {
-            HttpLoggingInterceptor.Level.NONE
-        } else {
-            HttpLoggingInterceptor.Level.BODY
-        }
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return loggingInterceptor
     }
 
@@ -67,8 +48,6 @@ class NetworkModule {
     @Singleton
     fun providesOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
-        apiKeyInterceptor: Interceptor,
-        @ApplicationContext appContext: Context
     ): OkHttpClient {
         val okHttpClientBuilder = OkHttpClient.Builder()
         okHttpClientBuilder
@@ -76,7 +55,6 @@ class NetworkModule {
             .writeTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(apiKeyInterceptor)  // Add the API key interceptor here
 
         return okHttpClientBuilder.build()
     }

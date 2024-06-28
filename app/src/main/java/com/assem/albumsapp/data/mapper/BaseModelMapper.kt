@@ -1,4 +1,4 @@
-package com.assem.albumsapp.domain.mapper
+package com.assem.albumsapp.data.mapper
 
 interface BaseModelMapper<From, To> {
     fun convert(from: From?): To

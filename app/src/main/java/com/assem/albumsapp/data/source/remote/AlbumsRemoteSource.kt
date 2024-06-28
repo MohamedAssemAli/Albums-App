@@ -1,3 +1,7 @@
 package com.assem.albumsapp.data.source.remote
 
-interface AlbumsRemoteSource {}
+import com.assem.albumsapp.data.models.response.FeedResponse
+
+interface AlbumsRemoteSource {
+    suspend fun getAlbumsFeed(): FeedResponse
+}
