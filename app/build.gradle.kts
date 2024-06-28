@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinAndroidKsp)
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -60,6 +61,8 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     implementation(libs.bundles.networking)
     implementation(libs.bundles.glide)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.swiperefresh)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

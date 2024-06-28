@@ -8,8 +8,12 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.2"
 activityCompose = "1.9.0"
 composeBom = "2024.06.00"
+swiperefresh = "0.24.2-alpha"
+material3 = "1.2.1"
 ksp = "2.0.0-1.0.21"
-# --> Androidx <-- #
+composeNavigation = "2.8.0-beta04"
+serialization = "1.6.3"
+
 # --> Networking <-- #
 retrofit2 = "2.9.0"
 okhttp3 = "4.10.0"
@@ -36,14 +40,15 @@ androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-
-
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "swiperefresh" }
 
 # --> Networking <-- #
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit2" }
@@ -65,12 +70,11 @@ glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-compiler = { module = "com.github.bumptech.glide:glide", version.ref = "glide-compiler" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
-
-
 [bundles]
-androidx = ["androidx-core-ktx", "androidx-lifecycle-runtime-ktx", "androidx-activity-compose", "androidx-compose-bom", "androidx-ui",
-    "androidx-ui-graphics", "androidx-ui-tooling", "androidx-ui-tooling-preview", "androidx-ui-test-manifest", "androidx-material3"]
-hilt = ["hilt-android", "hilt-android-compiler", "hilt-android-testing", "hilt-navigation-compose"]
+androidx = ["androidx-core-ktx", "androidx-lifecycle-runtime-ktx", "androidx-activity-compose", "androidx-compose-bom",
+    "navigation-compose", "androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling",
+    "androidx-ui-tooling-preview", "androidx-ui-test-manifest", "androidx-material3"]
+hilt = ["hilt-android", "hilt-android-testing", "hilt-navigation-compose"]
 networking = ["retrofit2", "okhttp3", "converter-gson", "logging-interceptor"]
 glide = ["glide", "glide-compiler"]
 
@@ -80,4 +84,4 @@ jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "k
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinAndroidKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
