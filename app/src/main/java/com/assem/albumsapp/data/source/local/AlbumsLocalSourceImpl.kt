@@ -1,5 +1,7 @@
 package com.assem.albumsapp.data.source.local
 
+import com.assem.albumsapp.data.models.dao.AlbumDaoModel
+import com.assem.albumsapp.data.source.local.dao.AlbumDao
 import com.assem.albumsapp.domain.entities.Album
 import javax.inject.Inject
 
@@ -8,19 +10,21 @@ import javax.inject.Inject
  * mohamed.assem.ali@gmail.com
  */
 
-class AlbumsLocalSourceImpl @Inject constructor() :
+class AlbumsLocalSourceImpl @Inject constructor(private val albumDao: AlbumDao) :
     AlbumsLocalSource {
-    override suspend fun getAlbumsFeed(): List<Album> {
-        return emptyList()
-//        return listOf(
-//            Album(name = "AAA", artistName = "AAA"),
-//            Album(name = "BBB", artistName = "BBB"),
-//            Album(name = "CCC", artistName = "CCC"),
-//            Album(name = "DDD", artistName = "DDD")
-//        )
+    override suspend fun getAlbumsList(): List<AlbumDaoModel> {
+        return albumDao.getAlbumsList()
     }
 
-    override suspend fun insertAlbumsFeed(albumsList: List<Album>) {}
+    override suspend fun insertAlbums(albumsList: List<AlbumDaoModel>) {
+        return albumDao.insertAlbums(albumsList)
+    }
 
-    override suspend fun clearCache() {}
+    override suspend fun getAlbumById(albumId: String): AlbumDaoModel? {
+        return albumDao.getAlbumById(albumId)
+    }
+
+    override suspend fun clearCache(): Boolean {
+        return albumDao.clearCache()
+    }
 }

@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface AlbumsRepository {
     suspend fun getAlbumsFeed(fetchFromRemote: Boolean): Flow<Resource<List<Album>>>
+    suspend fun getAlbumById(albumId: String): Flow<Resource<Album>>
 }

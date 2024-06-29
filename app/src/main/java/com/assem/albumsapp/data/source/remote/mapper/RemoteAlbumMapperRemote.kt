@@ -1,4 +1,4 @@
-package com.assem.albumsapp.data.mapper
+package com.assem.albumsapp.data.source.remote.mapper
 
 import com.assem.albumsapp.data.models.remote.RemoteAlbum
 import com.assem.albumsapp.domain.entities.Album
@@ -9,8 +9,8 @@ import javax.inject.Inject
  * mohamed.assem.ali@gmail.com
  */
 
-class AlbumMapper @Inject constructor(private val genereMapper: GenereMapper) :
-    BaseModelMapper<RemoteAlbum, Album> {
+class RemoteAlbumMapperRemote @Inject constructor(private val remoteGenereMapper: RemoteGenereMapperRemote) :
+    BaseRemoteModelMapper<RemoteAlbum, Album> {
     override fun convert(from: RemoteAlbum?): Album {
         return from?.let {
             Album(
@@ -20,7 +20,7 @@ class AlbumMapper @Inject constructor(private val genereMapper: GenereMapper) :
                 artworkUrl100 = it.artworkUrl100.orEmpty(),
                 contentAdvisoryRating = it.contentAdvisoryRating.orEmpty(),
                 genres =
-                it.remoteGenres?.map { genre -> genereMapper.convert(genre) }
+                it.remoteGenres?.map { genre -> remoteGenereMapper.convert(genre) }
                     ?: emptyList(),
                 id = it.id.orEmpty(),
                 kind = it.kind.orEmpty(),

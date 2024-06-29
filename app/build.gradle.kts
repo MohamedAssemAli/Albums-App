@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.realm)
+
 }
 
 android {
@@ -63,6 +65,7 @@ dependencies {
     implementation(libs.bundles.glide)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.swiperefresh)
+    implementation(libs.realm)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

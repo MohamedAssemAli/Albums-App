@@ -2,8 +2,10 @@ package com.assem.albumsapp.data.repository
 
 import com.assem.albumsapp.data.source.remote.AlbumsRemoteSource
 import com.assem.albumsapp.domain.entities.Album
-import com.assem.albumsapp.data.mapper.FeedMapper
+import com.assem.albumsapp.data.source.remote.mapper.RemoteFeedMapperRemote
 import com.assem.albumsapp.data.source.local.AlbumsLocalSource
+import com.assem.albumsapp.data.source.local.mapper.toAlbum
+import com.assem.albumsapp.data.source.local.mapper.toAlbumDaoModel
 import com.assem.albumsapp.domain.repository.AlbumsRepository
 import com.assem.albumsapp.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -15,15 +17,15 @@ import javax.inject.Inject
 class AlbumsRepositoryImpl @Inject constructor(
     private val remoteSource: AlbumsRemoteSource,
     private val localSource: AlbumsLocalSource,
-    private val feedMapper: FeedMapper
+    private val remoteFeedMapper: RemoteFeedMapperRemote
 ) : AlbumsRepository {
 
     override suspend fun getAlbumsFeed(fetchFromRemote: Boolean): Flow<Resource<List<Album>>> {
         return flow {
             emit(Resource.Loading(true))
 
-            val localFeed = localSource.getAlbumsFeed()
-            emit(Resource.Success(data = localFeed))
+            val localFeed = localSource.getAlbumsList()
+            emit(Resource.Success(data = localFeed.map { it.toAlbum() }))
 
             val isCacheEmpty = localFeed.isEmpty()
             val shouldLoadCache = !isCacheEmpty && !fetchFromRemote
@@ -34,7 +36,7 @@ class AlbumsRepositoryImpl @Inject constructor(
 
             val remoteFeed = try {
                 val response = remoteSource.getAlbumsFeed()
-                feedMapper.convert(response)
+                remoteFeedMapper.convert(response)
             } catch (e: IOException) {
                 e.printStackTrace()
                 emit(Resource.Error("IOException => Couldn't load data"))
@@ -46,15 +48,29 @@ class AlbumsRepositoryImpl @Inject constructor(
             }
 
             remoteFeed?.let { feed ->
-                // TODO -> uncomment after implementing caching
-                /*
                 localSource.clearCache()
-                localSource.insertAlbumsFeed(feed)
-                emit(Resource.Success(data = localSource.getAlbumsFeed()))
-                 */
-                emit(Resource.Success(data = feed))
+                localSource.insertAlbums(feed.map { it.toAlbumDaoModel() })
+                emit(Resource.Success(data = localSource.getAlbumsList().map { it.toAlbum() }))
                 emit(Resource.Loading(false))
             }
+        }
+    }
+
+    override suspend fun getAlbumById(albumId: String): Flow<Resource<Album>> {
+        return flow {
+            emit(Resource.Loading(true))
+            try {
+                val localAlbum = localSource.getAlbumById(albumId)
+                localAlbum?.let {
+                    val album = it.toAlbum()
+                    emit(Resource.Success(data = album))
+                }
+            } catch (e: Exception) {
+                emit(Resource.Loading(false))
+                emit(Resource.Error("Item not found in the cache"))
+                return@flow
+            }
+            emit(Resource.Loading(false))
         }
     }
 }

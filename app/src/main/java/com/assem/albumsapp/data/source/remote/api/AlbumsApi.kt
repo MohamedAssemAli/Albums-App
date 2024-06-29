@@ -1,4 +1,4 @@
-package com.assem.albumsapp.data.api
+package com.assem.albumsapp.data.source.remote.api
 
 import com.assem.albumsapp.data.models.response.FeedResponse
 import com.assem.albumsapp.data.source.remote.RemoteConfig

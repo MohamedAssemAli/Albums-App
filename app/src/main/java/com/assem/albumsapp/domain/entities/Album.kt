@@ -1,7 +1,7 @@
 package com.assem.albumsapp.domain.entities
 
 
-data class Album(
+data class Album (
     var artistId: String = "",
     var artistName: String = "",
     var artistUrl: String = "",

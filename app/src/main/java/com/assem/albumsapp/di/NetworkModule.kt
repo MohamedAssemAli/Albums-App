@@ -2,7 +2,7 @@ package com.assem.albumsapp.di
 
 import android.content.Context
 import androidx.multidex.BuildConfig
-import com.assem.albumsapp.data.api.AlbumsApi
+import com.assem.albumsapp.data.source.remote.api.AlbumsApi
 import com.assem.albumsapp.data.source.remote.RemoteConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

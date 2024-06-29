@@ -1,4 +1,4 @@
-package com.assem.albumsapp.data.mapper
+package com.assem.albumsapp.data.source.remote.mapper
 
 import com.assem.albumsapp.data.models.response.FeedResponse
 import com.assem.albumsapp.domain.entities.Album
@@ -9,11 +9,11 @@ import javax.inject.Inject
  * mohamed.assem.ali@gmail.com
  */
 
-class FeedMapper @Inject constructor(private val albumMapper: AlbumMapper) :
-    BaseModelMapper<FeedResponse, List<Album>> {
+class RemoteFeedMapperRemote @Inject constructor(private val remoteAlbumMapper: RemoteAlbumMapperRemote) :
+    BaseRemoteModelMapper<FeedResponse, List<Album>> {
     override fun convert(from: FeedResponse?): List<Album> {
         return from?.remoteFeed?.results.let {
-            it?.map { album -> albumMapper.convert(album) } ?: emptyList()
+            it?.map { album -> remoteAlbumMapper.convert(album) } ?: emptyList()
         }
     }
 }
