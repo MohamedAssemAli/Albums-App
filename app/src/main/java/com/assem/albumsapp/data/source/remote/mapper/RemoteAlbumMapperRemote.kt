@@ -17,7 +17,7 @@ class RemoteAlbumMapperRemote @Inject constructor(private val remoteGenereMapper
                 artistId = it.artistId.orEmpty(),
                 artistName = it.artistName.orEmpty(),
                 artistUrl = it.artistUrl.orEmpty(),
-                artworkUrl100 = it.artworkUrl100.orEmpty(),
+                artworkUrl100 = getLargeArtWork(it.artworkUrl100.orEmpty()),
                 contentAdvisoryRating = it.contentAdvisoryRating.orEmpty(),
                 genres =
                 it.remoteGenres?.map { genre -> remoteGenereMapper.convert(genre) }
@@ -29,6 +29,9 @@ class RemoteAlbumMapperRemote @Inject constructor(private val remoteGenereMapper
                 url = it.url.orEmpty(),
             )
         } ?: Album()
+    }
 
+    private fun getLargeArtWork(artworkUrl100: String): String {
+        return artworkUrl100.replace("100x100", "1000x1000")
     }
 }

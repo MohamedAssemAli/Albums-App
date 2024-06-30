@@ -62,10 +62,10 @@ dependencies {
     implementation(libs.bundles.hilt)
     ksp(libs.hilt.android.compiler)
     implementation(libs.bundles.networking)
-    implementation(libs.bundles.glide)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.swiperefresh)
     implementation(libs.realm)
+    implementation(libs.coil)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
