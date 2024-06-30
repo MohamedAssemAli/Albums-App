@@ -63,14 +63,15 @@ class AlbumsRepositoryImpl @Inject constructor(
                 val localAlbum = localSource.getAlbumById(albumId)
                 localAlbum?.let {
                     val album = it.toAlbum()
+                    emit(Resource.Loading(false))
                     emit(Resource.Success(data = album))
+                    return@flow
                 }
             } catch (e: Exception) {
                 emit(Resource.Loading(false))
                 emit(Resource.Error("Item not found in the cache"))
                 return@flow
             }
-            emit(Resource.Loading(false))
         }
     }
 }

@@ -13,5 +13,6 @@ sealed class AppScreens {
     data object AlbumsListScreen : AppScreens()
 
     @Serializable
-    data object AlbumsDetailsScreen : AppScreens()
+    data class AlbumsDetailsScreen(val albumId: String) : AppScreens()
+
 }

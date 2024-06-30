@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.assem.albumsapp.presentation.album_details.AlbumDetailsScreen
 import com.assem.albumsapp.presentation.albums_list.AlbumsListScreen
 import com.assem.albumsapp.ui.navigation.AppScreens
 import com.assem.albumsapp.ui.theme.AlbumsAppTheme
@@ -21,7 +23,17 @@ class MainActivity : ComponentActivity() {
                 NavHost(
                     navController = navController, startDestination = AppScreens.AlbumsListScreen
                 ) {
-                    composable<AppScreens.AlbumsListScreen> { AlbumsListScreen() }
+                    composable<AppScreens.AlbumsListScreen> {
+                        AlbumsListScreen {
+                            navController.navigate(
+                                AppScreens.AlbumsDetailsScreen(it)
+                            )
+                        }
+                    }
+                    composable<AppScreens.AlbumsDetailsScreen> {
+                        val args = it.toRoute<AppScreens.AlbumsDetailsScreen>()
+                        AlbumDetailsScreen(albumId = args.albumId)
+                    }
                 }
             }
         }

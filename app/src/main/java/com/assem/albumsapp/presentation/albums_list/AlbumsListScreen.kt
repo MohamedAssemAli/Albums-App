@@ -1,5 +1,6 @@
 package com.assem.albumsapp.presentation.albums_list
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,8 +10,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -20,7 +23,8 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
  */
 @Composable
 fun AlbumsListScreen(
-    viewModel: AlbumsListViewModel = hiltViewModel()
+    viewModel: AlbumsListViewModel = hiltViewModel(),
+    onNavigationEvent: (String) -> Unit,
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(
         isRefreshing = viewModel.state.isRefreshing
@@ -45,8 +49,7 @@ fun AlbumsListScreen(
                         album = album,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable {
-                            }
+                            .clickable { onNavigationEvent(album.id) }
                             .padding(16.dp)
                     )
                     if (i < state.albums.size) {

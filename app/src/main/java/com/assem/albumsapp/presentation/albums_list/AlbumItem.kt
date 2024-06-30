@@ -22,7 +22,9 @@ fun AlbumItem(
     album: Album,
     modifier: Modifier = Modifier
 ) {
-    Column {
+    Column(
+        modifier = modifier,
+    ) {
         Text(
             text = album.name,
             fontWeight = FontWeight.SemiBold,
