@@ -13,10 +13,10 @@ material3 = "1.2.1"
 ksp = "2.0.0-1.0.21"
 composeNavigation = "2.8.0-beta04"
 serialization = "1.6.3"
-
+splash = "1.0.1"
 # --> Networking <-- #
 retrofit2 = "2.9.0"
-okhttp3 = "4.10.0"
+okhttp3 = "4.12.0"
 converter-gson = "2.9.0"
 logging-interceptor = "4.10.0"
 # --> HILT <-- #
@@ -41,6 +41,8 @@ androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+androidx-splash = { group = "androidx.core", name = "core-splashscreen", version.ref = "splash" }
+
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -73,7 +75,7 @@ realm = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
 [bundles]
 androidx = ["androidx-core-ktx", "androidx-lifecycle-runtime-ktx", "androidx-activity-compose", "androidx-compose-bom",
     "navigation-compose", "androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling",
-    "androidx-ui-tooling-preview", "androidx-ui-test-manifest", "androidx-material3"]
+    "androidx-ui-tooling-preview", "androidx-ui-test-manifest", "androidx-material3", "androidx-splash"]
 hilt = ["hilt-android", "hilt-android-testing", "hilt-navigation-compose"]
 networking = ["retrofit2", "okhttp3", "converter-gson", "logging-interceptor"]
 
