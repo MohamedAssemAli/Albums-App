@@ -42,6 +42,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.assem.albumsapp.R
 import com.assem.albumsapp.domain.entities.Album
+import com.assem.albumsapp.ui.theme.CardBgColor
 
 /**
  * Created by mohamedassem
@@ -53,7 +54,7 @@ fun AlbumItem(
     album: Album,
     onNavigationEvent: () -> Unit,
 ) {
-    val defaultColor = MaterialTheme.colorScheme.secondaryContainer
+    val defaultColor = CardBgColor
     val dominantColor by remember { mutableStateOf(defaultColor) }
     Column(
         modifier = Modifier
@@ -64,7 +65,7 @@ fun AlbumItem(
             .background(
                 Brush.verticalGradient(
                     colors = listOf(
-                        MaterialTheme.colorScheme.secondaryContainer,
+                        CardBgColor,
                         dominantColor
                     )
                 )

@@ -25,6 +25,8 @@ import com.assem.albumsapp.R
 import com.assem.albumsapp.ui.components.ErrorView
 import com.assem.albumsapp.ui.components.LoadingComponent
 import com.assem.albumsapp.ui.components.MyTopAppbar
+import com.assem.albumsapp.ui.theme.BackgroundColor
+import com.assem.albumsapp.ui.theme.Purple80
 import com.assem.albumsapp.util.ScreenState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
@@ -42,6 +44,7 @@ fun AlbumsListScreen(
 ) {
     val albumsListState = viewModel.screenState.collectAsState().value
     Scaffold(
+        containerColor = BackgroundColor,
         topBar = { MyTopAppbar(title = stringResource(id = R.string.app_name)) }
     ) { paddingValues ->
         when (albumsListState) {
