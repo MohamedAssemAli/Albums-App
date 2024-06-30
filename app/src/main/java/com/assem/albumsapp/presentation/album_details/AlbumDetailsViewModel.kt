@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.assem.albumsapp.domain.entities.Album
 import com.assem.albumsapp.domain.repository.AlbumsRepository
+import com.assem.albumsapp.util.ErrorType
 import com.assem.albumsapp.util.Resource
+import com.assem.albumsapp.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,10 +27,10 @@ class AlbumDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _screenState =
-        MutableStateFlow<Resource<Album>>(Resource.Loading())
+        MutableStateFlow<ScreenState<Album>>(ScreenState.Loading())
     val screenState = _screenState.asStateFlow()
 
-    fun handleIntent(intent: AlbumDetailsIntent) {
+    fun sendIntent(intent: AlbumDetailsIntent) {
         when (intent) {
             is AlbumDetailsIntent.GetAlbumById -> {
                 getAlbumById(intent.albumId)
@@ -40,28 +42,29 @@ class AlbumDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             repository.getAlbumById(albumId)
                 .catch { error ->
-                    val errorMessage = error.message ?: "Somthing wrong happened"
-                    _screenState.value = Resource.Error(message = errorMessage)
+                    _screenState.value =
+                        ScreenState.Error(errorType = ErrorType.SomthingWrongHappened(error.message))
                     return@catch
                 }
-                .collectLatest { result ->
+                .collect { result ->
                     when (result) {
                         is Resource.Error -> {
-                            val errorMessage = result.message ?: "Somthing wrong happened"
-                            _screenState.value = Resource.Error(message = errorMessage)
+                            _screenState.value = ScreenState.Error(
+                                errorType = result.errorType ?: ErrorType.SomthingWrongHappened()
+                            )
                         }
 
                         is Resource.Loading -> {
-                            _screenState.value = Resource.Loading()
+                            _screenState.value = ScreenState.Loading()
                         }
 
                         is Resource.Success -> {
                             result.data?.let {
-                                _screenState.value = Resource.Success(it)
+                                _screenState.value = ScreenState.Success(it)
                             }
                         }
                     }
-                    return@collectLatest
+                    return@collect
                 }
         }
     }

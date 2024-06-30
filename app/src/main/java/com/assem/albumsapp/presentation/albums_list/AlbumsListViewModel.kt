@@ -1,13 +1,21 @@
 package com.assem.albumsapp.presentation.albums_list
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.assem.albumsapp.domain.entities.Album
 import com.assem.albumsapp.domain.repository.AlbumsRepository
+import com.assem.albumsapp.util.ErrorType
 import com.assem.albumsapp.util.Resource
+import com.assem.albumsapp.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,15 +29,18 @@ class AlbumsListViewModel @Inject constructor(
     private val repository: AlbumsRepository
 ) : ViewModel() {
 
-    var state by mutableStateOf(AlbumsListState())
+    private var _screenState =
+        MutableStateFlow<ScreenState<List<Album>>>(ScreenState.Loading())
+    val screenState = _screenState.asStateFlow()
 
     init {
         getAlbumsList()
     }
 
-    fun handleIntent(intent: AlbumsListIntent) {
+    fun sendIntent(intent: AlbumsListIntent) {
         when (intent) {
             AlbumsListIntent.RefreshList -> {
+//                _screenState.value = ScreenState.IsRefreshing(true)
                 getAlbumsList(fetchFromRemote = true)
             }
         }
@@ -41,19 +52,28 @@ class AlbumsListViewModel @Inject constructor(
         viewModelScope.launch {
             repository
                 .getAlbumsFeed(fetchFromRemote)
-                .collect { result ->
+                .catch { error ->
+                    _screenState.value =
+                        ScreenState.Error(errorType = ErrorType.SomthingWrongHappened(error.message))
+                    return@catch
+                }
+                .collectLatest { result ->
+                    Log.d("Assem", "getAlbumsList: " + result.toString())
                     when (result) {
                         is Resource.Success -> {
-                            result.data?.let { state = state.copy(albums = it) }
+                            result.data?.let {
+                                _screenState.value = ScreenState.Success(it)
+                            }
                         }
 
                         is Resource.Loading -> {
-                            state = state.copy(isLoading = result.isLoading)
+                            _screenState.value = ScreenState.Loading()
                         }
 
                         is Resource.Error -> {
-                            state =
-                                state.copy(error = result.message ?: "Something Wrong Happened!")
+                            _screenState.value = ScreenState.Error(
+                                errorType = result.errorType ?: ErrorType.SomthingWrongHappened()
+                            )
                         }
                     }
                 }
