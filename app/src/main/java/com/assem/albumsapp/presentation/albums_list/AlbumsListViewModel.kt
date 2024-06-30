@@ -1,21 +1,17 @@
 package com.assem.albumsapp.presentation.albums_list
 
 import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.assem.albumsapp.domain.entities.Album
 import com.assem.albumsapp.domain.repository.AlbumsRepository
 import com.assem.albumsapp.util.ErrorType
-import com.assem.albumsapp.util.Resource
+import com.assem.albumsapp.data.utils.ResourceState
 import com.assem.albumsapp.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,7 +26,7 @@ class AlbumsListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _screenState =
-        MutableStateFlow<ScreenState<List<Album>>>(ScreenState.Loading())
+        MutableStateFlow<ScreenState<List<Album>>>(ScreenState.Idle())
     val screenState = _screenState.asStateFlow()
 
     init {
@@ -40,7 +36,6 @@ class AlbumsListViewModel @Inject constructor(
     fun sendIntent(intent: AlbumsListIntent) {
         when (intent) {
             AlbumsListIntent.RefreshList -> {
-//                _screenState.value = ScreenState.IsRefreshing(true)
                 getAlbumsList(fetchFromRemote = true)
             }
         }
@@ -57,20 +52,20 @@ class AlbumsListViewModel @Inject constructor(
                         ScreenState.Error(errorType = ErrorType.SomthingWrongHappened(error.message))
                     return@catch
                 }
-                .collectLatest { result ->
+                .collect { result ->
                     Log.d("Assem", "getAlbumsList: " + result.toString())
                     when (result) {
-                        is Resource.Success -> {
+                        is ResourceState.Success -> {
                             result.data?.let {
                                 _screenState.value = ScreenState.Success(it)
                             }
                         }
 
-                        is Resource.Loading -> {
+                        is ResourceState.Loading -> {
                             _screenState.value = ScreenState.Loading()
                         }
 
-                        is Resource.Error -> {
+                        is ResourceState.Error -> {
                             _screenState.value = ScreenState.Error(
                                 errorType = result.errorType ?: ErrorType.SomthingWrongHappened()
                             )

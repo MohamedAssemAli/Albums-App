@@ -1,18 +1,16 @@
 package com.assem.albumsapp.presentation.album_details
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.assem.albumsapp.domain.entities.Album
 import com.assem.albumsapp.domain.repository.AlbumsRepository
 import com.assem.albumsapp.util.ErrorType
-import com.assem.albumsapp.util.Resource
+import com.assem.albumsapp.data.utils.ResourceState
 import com.assem.albumsapp.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -48,23 +46,22 @@ class AlbumDetailsViewModel @Inject constructor(
                 }
                 .collect { result ->
                     when (result) {
-                        is Resource.Error -> {
+                        is ResourceState.Error -> {
                             _screenState.value = ScreenState.Error(
                                 errorType = result.errorType ?: ErrorType.SomthingWrongHappened()
                             )
                         }
 
-                        is Resource.Loading -> {
+                        is ResourceState.Loading -> {
                             _screenState.value = ScreenState.Loading()
                         }
 
-                        is Resource.Success -> {
+                        is ResourceState.Success -> {
                             result.data?.let {
                                 _screenState.value = ScreenState.Success(it)
                             }
                         }
                     }
-                    return@collect
                 }
         }
     }

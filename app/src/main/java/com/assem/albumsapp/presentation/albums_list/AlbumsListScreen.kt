@@ -1,5 +1,6 @@
 package com.assem.albumsapp.presentation.albums_list
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.asLiveData
 import com.assem.albumsapp.ui.components.ErrorView
+import com.assem.albumsapp.ui.components.LoadingComponent
 import com.assem.albumsapp.util.ScreenState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
@@ -29,16 +31,14 @@ fun AlbumsListScreen(
     viewModel: AlbumsListViewModel = hiltViewModel(),
     onNavigationEvent: (String) -> Unit,
 ) {
-//    val swipeRefreshState = rememberSwipeRefreshState(
-//        isRefreshing = viewModel.state.isRefreshing
-//    )
-
     val albumsListState = viewModel.screenState.collectAsState().value
-    var isRefreshing = false
-
     when (albumsListState) {
-        is ScreenState.IsRefreshing -> {
-//            isRefreshing = albumsListState.isRefreshing
+        is ScreenState.Loading -> {
+            LoadingComponent()
+        }
+
+        is ScreenState.Idle -> {
+            LoadingComponent()
         }
 
         is ScreenState.Error -> {
@@ -47,20 +47,11 @@ fun AlbumsListScreen(
             }
         }
 
-        is ScreenState.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        }
-
         is ScreenState.Success -> {
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                SwipeRefresh(state = SwipeRefreshState(isRefreshing), onRefresh = {
+                SwipeRefresh(state = SwipeRefreshState(false), onRefresh = {
                     viewModel.sendIntent(AlbumsListIntent.RefreshList)
                 }) {
                     LazyVerticalGrid(
@@ -80,7 +71,5 @@ fun AlbumsListScreen(
                 }
             }
         }
-
-
     }
 }

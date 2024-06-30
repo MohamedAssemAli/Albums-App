@@ -105,6 +105,6 @@ fun AlbumDetailsScreen(
         }
 
         is ScreenState.Error -> {}
-        is ScreenState.IsRefreshing -> {}
+        is ScreenState.Idle -> {}
     }
 }
