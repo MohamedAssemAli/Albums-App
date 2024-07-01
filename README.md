@@ -39,7 +39,6 @@
 
 # App Screenshots
 
-![image](https://github.com/MohamedAssemAli/Albums-App/assets/20915201/52842aa1-b13e-44f2-9b50-75ba67d3f83f)
+https://github.com/MohamedAssemAli/Albums-App/blob/main/Screenshot_20240701_042652.png?raw=true 
 
-![image](https://github.com/MohamedAssemAli/Albums-App/assets/20915201/57835f6f-eda9-4441-aa62-0747b9852b13)
-
+https://github.com/MohamedAssemAli/Albums-App/blob/main/Screenshot_20240701_042705.png?raw=true
