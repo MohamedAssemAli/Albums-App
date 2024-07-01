@@ -2,7 +2,7 @@ package com.assem.albumsapp.data.repository
 
 import com.assem.albumsapp.data.source.remote.AlbumsRemoteSource
 import com.assem.albumsapp.domain.entities.Album
-import com.assem.albumsapp.data.source.remote.mapper.RemoteFeedMapperRemote
+import com.assem.albumsapp.data.source.remote.mapper.RemoteFeedMapper
 import com.assem.albumsapp.data.source.local.AlbumsLocalSource
 import com.assem.albumsapp.data.source.local.mapper.toAlbum
 import com.assem.albumsapp.data.source.local.mapper.toAlbumDaoModel
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class AlbumsRepositoryImpl @Inject constructor(
     private val remoteSource: AlbumsRemoteSource,
     private val localSource: AlbumsLocalSource,
-    private val remoteFeedMapper: RemoteFeedMapperRemote
+    private val remoteFeedMapper: RemoteFeedMapper
 ) : AlbumsRepository {
 
     override suspend fun getAlbumsFeed(fetchFromRemote: Boolean): Flow<ResourceState<List<Album>>> {

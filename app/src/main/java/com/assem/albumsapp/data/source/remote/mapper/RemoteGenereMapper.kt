@@ -8,7 +8,7 @@ import javax.inject.Inject
  * Created by mohamedassem
  * mohamed.assem.ali@gmail.com
  */
-class RemoteGenereMapperRemote @Inject constructor() : BaseRemoteModelMapper<RemoteGenre, Genre> {
+class RemoteGenereMapper @Inject constructor() : BaseRemoteModelMapper<RemoteGenre, Genre> {
     override fun convert(from: RemoteGenre?): Genre {
         return from?.let {
             Genre(

@@ -9,7 +9,7 @@ import javax.inject.Inject
  * mohamed.assem.ali@gmail.com
  */
 
-class RemoteAlbumMapperRemote @Inject constructor(private val remoteGenereMapper: RemoteGenereMapperRemote) :
+class RemoteAlbumMapper @Inject constructor(private val remoteGenereMapper: RemoteGenereMapper) :
     BaseRemoteModelMapper<RemoteAlbum, Album> {
     override fun convert(from: RemoteAlbum?): Album {
         return from?.let {
