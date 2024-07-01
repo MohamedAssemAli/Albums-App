@@ -36,3 +36,10 @@
 - We implemented UI using Jetpack compose. 
 - We have “ScreenState” Class to define the states of the screen (Idle, Loading, Success, Error), so we can inflate the need for UI components based on the state.
 
+
+# App Screenshots
+
+![image](https://github.com/MohamedAssemAli/Albums-App/assets/20915201/52842aa1-b13e-44f2-9b50-75ba67d3f83f)
+
+![image](https://github.com/MohamedAssemAli/Albums-App/assets/20915201/57835f6f-eda9-4441-aa62-0747b9852b13)
+
