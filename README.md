@@ -8,13 +8,13 @@
 - Users can update the cache by refreshing the screen using swipe to refresh functionality
 
 
-## App Architecture:
+### App Architecture:
 - This app is implemented using Kotlin, Clean Architecture, MVI Design pattern, and Dependency injection. 
 - Data access layer: contains code for interacting with the app's data sources, such as the local\remote source.
 - Domain layer: This layer contains the business logic for the feature (Repository & entities). 
 - UI layer: This layer contains the code for the user interface and handles user interactions and View Models. We are using Jetpack Compose for implementing the UI.
 
-## Data Layer:
+### Data Layer:
 - In the data layer, we are handling the data sources we have.
 - We have two data sources one from the network endpoints and another one from the local database.
 - We are using “Retrofit” third party to handle API calls.
@@ -24,12 +24,12 @@
 - We have “ResourcesState” Class to define the states of getting the data process from the data source.
 
 
-# Domain Layer:
+### Domain Layer:
 - In the domain layer, We have the entities we use through the UI layer.
 - We have the repository interface to define the communication between the domain and data layer.
 - We don’t include use cases in such projects as the scope is not that big to use this approach. It may be considered overengineering in such a case.
 
-# UI Layer:
+### UI Layer:
 - In the UI layer, We have mainly two screens.
 - The first screen displays the list of the albums with album cover image, artist name, and album name.
 - The second screen displays the details of the album and all its data returned from the data source.
@@ -37,9 +37,7 @@
 - We have “ScreenState” Class to define the states of the screen (Idle, Loading, Success, Error), so we can inflate the need for UI components based on the state.
 
 
-# App Screenshots
+### App Screenshots
 
-![image](https://github.com/MohamedAssemAli/Albums-App/assets/20915201/52842aa1-b13e-44f2-9b50-75ba67d3f83f)
-
-![image](https://github.com/MohamedAssemAli/Albums-App/assets/20915201/57835f6f-eda9-4441-aa62-0747b9852b13)
-
+![Screenshot_20240701_042652](https://github.com/MohamedAssemAli/Albums-App/assets/20915201/a2c8c673-26d4-49f2-9ec0-bb321b8b8343)
+![Screenshot_20240701_042705](https://github.com/MohamedAssemAli/Albums-App/assets/20915201/5732d939-8dbc-4d4d-bbc9-f75c4a8f3e78)
