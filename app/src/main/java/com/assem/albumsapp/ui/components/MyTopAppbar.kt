@@ -1,6 +1,5 @@
 package com.assem.albumsapp.ui.components
 
-import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,13 +9,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import com.assem.albumsapp.ui.theme.BackgroundColor
-import com.assem.albumsapp.ui.theme.Purple40
-import com.assem.albumsapp.ui.theme.Purple80
+import com.assem.albumsapp.ui.theme.PrimaryColor
 
 /**
  * Created by mohamedassem
@@ -26,14 +23,15 @@ import com.assem.albumsapp.ui.theme.Purple80
 @Composable
 fun MyTopAppbar(
     title: String,
-    hasBackNavigation: Boolean = false
+    hasBackNavigation: Boolean = false,
+    navController: NavHostController? = null
 ) {
-    val navController = rememberNavController()
+
     TopAppBar(
         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
         title = { Text(text = title) },
         colors = TopAppBarColors(
-            containerColor = Purple80,
+            containerColor = PrimaryColor,
             scrolledContainerColor = BackgroundColor,
             navigationIconContentColor = Color.White,
             titleContentColor = Color.White,
@@ -42,8 +40,7 @@ fun MyTopAppbar(
         navigationIcon = {
             if (hasBackNavigation) {
                 IconButton(onClick = {
-                    Log.d("Assem", "MyTopAppbar: ")
-                    navController.popBackStack()
+                    navController?.navigateUp()
                 }) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,

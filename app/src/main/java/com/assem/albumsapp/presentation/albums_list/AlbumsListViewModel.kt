@@ -49,11 +49,14 @@ class AlbumsListViewModel @Inject constructor(
                 .getAlbumsFeed(fetchFromRemote)
                 .catch { error ->
                     _screenState.value =
-                        ScreenState.Error(errorType = ErrorType.SomthingWrongHappened(error.message))
+                        ScreenState.Error(
+                            errorType = ErrorType.SomthingWrongHappened(
+                                error.message ?: "Something Wrong Happened!"
+                            )
+                        )
                     return@catch
                 }
                 .collect { result ->
-                    Log.d("Assem", "getAlbumsList: " + result.toString())
                     when (result) {
                         is ResourceState.Success -> {
                             result.data?.let {

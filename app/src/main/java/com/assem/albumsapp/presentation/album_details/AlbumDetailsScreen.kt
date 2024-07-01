@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -35,6 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.assem.albumsapp.R
@@ -42,8 +42,7 @@ import com.assem.albumsapp.ui.components.MyTopAppbar
 import com.assem.albumsapp.ui.theme.BackgroundColor
 import com.assem.albumsapp.ui.theme.Pink40
 import com.assem.albumsapp.ui.theme.Pink80
-import com.assem.albumsapp.ui.theme.Purple80
-import com.assem.albumsapp.ui.theme.PurpleGrey40
+import com.assem.albumsapp.ui.theme.ButtonBgColor
 import com.assem.albumsapp.util.startBrowserIntent
 
 /**
@@ -54,13 +53,14 @@ import com.assem.albumsapp.util.startBrowserIntent
 @Composable
 fun AlbumDetailsScreen(
     viewModel: AlbumDetailsViewModel = hiltViewModel(),
-    albumId: String
+    navController: NavHostController,
+    albumId: String,
 ) {
     viewModel.sendIntent(AlbumDetailsIntent.GetAlbumById(albumId))
     val context = LocalContext.current
     val albumDetailsState = viewModel.screenState.collectAsState().value
     val mainButtonColor = ButtonDefaults.buttonColors(
-        containerColor = PurpleGrey40,
+        containerColor = ButtonBgColor,
         contentColor = Color.White
     )
 
@@ -68,8 +68,9 @@ fun AlbumDetailsScreen(
         containerColor = BackgroundColor,
         topBar = {
             MyTopAppbar(
-                title = stringResource(id = R.string.app_name),
-                hasBackNavigation = true
+                title = stringResource(id = R.string.album_details),
+                hasBackNavigation = true,
+                navController = navController
             )
         }
     ) { paddingValues ->

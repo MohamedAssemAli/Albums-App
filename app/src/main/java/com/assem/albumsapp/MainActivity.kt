@@ -26,15 +26,11 @@ class MainActivity : ComponentActivity() {
                     navController = navController, startDestination = AppScreens.AlbumsListScreen
                 ) {
                     composable<AppScreens.AlbumsListScreen> {
-                        AlbumsListScreen {
-                            navController.navigate(
-                                AppScreens.AlbumsDetailsScreen(it)
-                            )
-                        }
+                        AlbumsListScreen(navController = navController,)
                     }
                     composable<AppScreens.AlbumsDetailsScreen> {
                         val args = it.toRoute<AppScreens.AlbumsDetailsScreen>()
-                        AlbumDetailsScreen(albumId = args.albumId)
+                        AlbumDetailsScreen(navController = navController, albumId = args.albumId)
                     }
                 }
             }

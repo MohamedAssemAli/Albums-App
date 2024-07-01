@@ -24,8 +24,7 @@ class AlbumDetailsViewModel @Inject constructor(
     private val repository: AlbumsRepository
 ) : ViewModel() {
 
-    private var _screenState =
-        MutableStateFlow<ScreenState<Album>>(ScreenState.Loading())
+    private var _screenState = MutableStateFlow<ScreenState<Album>>(ScreenState.Loading())
     val screenState = _screenState.asStateFlow()
 
     fun sendIntent(intent: AlbumDetailsIntent) {
@@ -38,31 +37,32 @@ class AlbumDetailsViewModel @Inject constructor(
 
     private fun getAlbumById(albumId: String) {
         viewModelScope.launch {
-            repository.getAlbumById(albumId)
-                .catch { error ->
-                    _screenState.value =
-                        ScreenState.Error(errorType = ErrorType.SomthingWrongHappened(error.message))
-                    return@catch
-                }
-                .collect { result ->
-                    when (result) {
-                        is ResourceState.Error -> {
-                            _screenState.value = ScreenState.Error(
-                                errorType = result.errorType ?: ErrorType.SomthingWrongHappened()
-                            )
-                        }
+            repository.getAlbumById(albumId).catch { error ->
+                _screenState.value = ScreenState.Error(
+                    errorType = ErrorType.SomthingWrongHappened(
+                        error.message ?: "Something Wrong Happened!"
+                    )
+                )
+                return@catch
+            }.collect { result ->
+                when (result) {
+                    is ResourceState.Error -> {
+                        _screenState.value = ScreenState.Error(
+                            errorType = result.errorType ?: ErrorType.SomthingWrongHappened()
+                        )
+                    }
 
-                        is ResourceState.Loading -> {
-                            _screenState.value = ScreenState.Loading()
-                        }
+                    is ResourceState.Loading -> {
+                        _screenState.value = ScreenState.Loading()
+                    }
 
-                        is ResourceState.Success -> {
-                            result.data?.let {
-                                _screenState.value = ScreenState.Success(it)
-                            }
+                    is ResourceState.Success -> {
+                        result.data?.let {
+                            _screenState.value = ScreenState.Success(it)
                         }
                     }
                 }
+            }
         }
     }
 }
